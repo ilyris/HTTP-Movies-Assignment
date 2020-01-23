@@ -74,10 +74,10 @@ app.post("/api/movies", (req, res) => {
 });
 
 app.put("/api/movies/:id", (req, res) => {
+  console.log(req.body);
   if (!req.params.id)
     res.status(400).send("Your request is missing the movie id");
   if (
-    req.body.id === undefined ||
     !req.body.title ||
     !req.body.director ||
     !req.body.metascore ||
@@ -88,11 +88,15 @@ app.put("/api/movies/:id", (req, res) => {
       .send("Make sure your request body has all the fields it needs");
   }
   movies = movies.map(movie => {
+    console.log(movie.id);
+    console.log(req.params.id);
     if (`${movie.id}` === req.params.id) {
+      console.log('request body should be returned')
       return req.body;
     }
     return movie;
   });
+  console.log('200 should hit');
   res.status(200).send(req.body);
 });
 
